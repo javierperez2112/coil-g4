@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "input.h": "c",
+        "stdlib.h": "c"
+    }
+}

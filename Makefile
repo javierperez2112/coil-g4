@@ -1,5 +1,5 @@
-main: main.o game.o frontend.c
-	gcc main.o game.o frontend.o -o main -Wall
+main: main.o game.o frontend.o
+	gcc main.o game.o frontend.o -o main -Wall -lncurses
     
 main.o: main.c
 	gcc main.c -c -Wall
