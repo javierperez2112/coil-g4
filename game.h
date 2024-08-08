@@ -8,14 +8,17 @@
 #define POINTS_PER_SECOND 1
 #define POINTS_PER_FOOD 30
 #define SCORE_FILE "snake_scores.txt"
+#include <time.h>
 
 // Structure: Defines a position with x and y coordinates
-typedef struct {
+typedef struct
+{
     int x, y;
 } Position;
 
 // Structure: Defines the snake with a body (consisting of positions), a length, and a direction
-typedef struct {
+typedef struct
+{
     Position *body;
     int length;
     int direction;
@@ -23,12 +26,14 @@ typedef struct {
 
 // Structure: Defines the food with a position
 
-typedef struct {
+typedef struct
+{
     Position position;
 } Food;
 
 // Structure: Defines the game with a snake, food, number of lives, score, username, and start time
-typedef struct {
+typedef struct
+{
     Snake snake;
     Food food;
     int lives;
@@ -37,12 +42,12 @@ typedef struct {
     time_t startTime;
 } Game;
 
-void initGame(Game *game);              // Start: Declaration of the function to initialize the game
-void updateGame(Game *game);            // Update: Declaration of the function to update the game
-void moveSnake(Snake *snake);           // Movement: Declaration of the function to move the snake
-int checkCollision(Game *game);         // Collision: Declaration of the function to check for collisions
-void generateFood(Game *game);          // Food: Declaration of the function to generate food
-void endGame(Game *game);               // Life: Declaration of the function to end the game
-void saveScore(Game *game);             // History: Declaration of the function to save the score
+void initGame(Game *game, int lives); // Start: Declaration of the function to initialize the game
+void updateGame(Game *game);          // Update: Declaration of the function to update the game
+void moveSnake(Snake *snake);         // Movement: Declaration of the function to move the snake
+int checkCollision(Game *game);       // Collision: Declaration of the function to check for collisions
+void generateFood(Game *game);        // Food: Declaration of the function to generate food
+void endGame(Game *game);             // Life: Declaration of the function to end the game
+void saveScore(Game *game);           // History: Declaration of the function to save the score
 
-#endif
+#endif  // GAME_H

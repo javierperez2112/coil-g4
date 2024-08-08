@@ -4,10 +4,9 @@
 #include "game.h"
 
 // Start: Initializes the game, including lives, score, snake length, direction, and food position
-void initGame(Game *game)
+void initGame(Game *game, int lives)
 {
-    game->lives = MAX_LIVES;                                                        // Sets the number of lives to the maximum value
-    game->score = 0;                                                                // Sets the score to 0
+    game->lives = lives;                                                            // Sets the number of lives to the maximum value
     game->snake.length = INITIAL_SNAKE_LENGTH;                                      // Sets the initial snake length
     game->snake.direction = 1;                                                      // Sets the initial direction of the snake
     game->snake.body = (Position *)malloc(INITIAL_SNAKE_LENGTH * sizeof(Position)); // Allocates memory for the snake body
@@ -113,7 +112,8 @@ void generateFood(Game *game)
 // Life: Ends the game when the snake dies and saves the score
 void endGame(Game *game)
 {
-    saveScore(game);        // Saves the score
+    if (game->lives == 0)
+        saveScore(game);    // Saves the score
     free(game->snake.body); // Frees the memory allocated for the snake body
 }
 
@@ -123,7 +123,7 @@ void saveScore(Game *game)
     FILE *file = fopen(SCORE_FILE, "a"); // Opens the file for appending
     if (file == NULL)
     {
-        printf("Fehler beim Öffnen der Datei!\n"); // Error opening the file
+        printf("Error opening the file!\n"); // Error opening the file
         return;
     }
     fprintf(file, "Username: %s, Score: %d\n", game->username, game->score); // Writes the username and score to the file

@@ -3,6 +3,7 @@
 
 #include "game.h"
 
+void runGame(Game *game);
 void drawGame(Game *game);      // Function to draw the current game state
 void delay(int milliseconds);   // Function to pause execution for a specified number of milliseconds
 
