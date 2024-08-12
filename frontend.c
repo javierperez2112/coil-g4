@@ -9,6 +9,14 @@
 #endif
 #include "frontend.h"
 
+#ifdef _WINDOWS
+#define CLEAR "cls"
+#else
+#define CLEAR "clear"
+#endif
+
+void delay(int);
+
 #ifndef _WINDOWS // Linux-specific POSIX functions
 void set_input_mode(struct termios *saved_attributes)
 {
@@ -37,14 +45,25 @@ void reset_input_mode(struct termios *saved_attributes)
 // TO DO: include Windows version (_WINDOWS)
 void runGame(Game *game)
 {
+#ifndef _WINDOWS
     struct termios saved_attributes;
     set_input_mode(&saved_attributes);
+#endif
+    char key;
+    system(CLEAR);
+    printf("Lives: %d\n", game->lives);
+    printf("Press any key to start or q to quit...\n");
+    while (!read(STDIN_FILENO, &key, 1))
+        ;
+    if (key == 'q' || key == 'Q')
+    {
+        printf("Game Over! Score: %d\n", game->score);
+    }
 
     // Main game loop
     while (1)
     {
         // Keyboard: Checks if a key has been pressed
-        char key;
         read(STDIN_FILENO, &key, 1);
         switch (key)
         {
@@ -81,7 +100,6 @@ void runGame(Game *game)
         moveSnake(&game->snake); // Movement: Moves the snake
         if (checkCollision(game))
         {                  // Collision: Checks for collisions
-            game->lives--; // Decrements the number of lives
             if (game->lives == 0)
             {                                                  // Life: Checks if there are no lives left
                 printf("Game Over! Score: %d\n", game->score); // Displays the final score
@@ -104,11 +122,7 @@ void runGame(Game *game)
 
 void drawGame(Game *game)
 {
-#ifdef _WINDOWS
-    system("cls");
-#else
-    system("clear");
-#endif
+    system(CLEAR);
     // Draws the game board
     for (int y = 0; y < BOARD_HEIGHT; y++)
     {
@@ -132,7 +146,7 @@ void drawGame(Game *game)
             {
                 if (game->food.position.x == x && game->food.position.y == y)
                 {
-                    printf("F"); // Food 'F'
+                    printf("#"); // Food 'F'
                 }
                 else
                 {

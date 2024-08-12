@@ -42,12 +42,13 @@ typedef struct
     time_t startTime;
 } Game;
 
-void initGame(Game *game, int lives); // Start: Declaration of the function to initialize the game
-void updateGame(Game *game);          // Update: Declaration of the function to update the game
-void moveSnake(Snake *snake);         // Movement: Declaration of the function to move the snake
-int checkCollision(Game *game);       // Collision: Declaration of the function to check for collisions
-void generateFood(Game *game);        // Food: Declaration of the function to generate food
-void endGame(Game *game);             // Life: Declaration of the function to end the game
-void saveScore(Game *game);           // History: Declaration of the function to save the score
+void initGame(Game *game);      // Start: Declaration of the function to initialize the game
+void updateGame(Game *game);    // Update: Declaration of the function to update the game
+void resetGame(Game *game);     // Reset: return the snake to its original size, when a life is lost.
+void moveSnake(Snake *snake);   // Movement: Declaration of the function to move the snake
+int checkCollision(Game *game); // Collision: Declaration of the function to check for collisions
+void generateFood(Game *game);  // Food: Declaration of the function to generate food
+void endGame(Game *game);       // Life: Declaration of the function to end the game
+void saveScore(Game *game);     // History: Declaration of the function to save the score
 
-#endif  // GAME_H
+#endif // GAME_H

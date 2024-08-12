@@ -5,6 +5,5 @@
 
 void runGame(Game *game);		// Run the game loop, exit when game over.
 void drawGame(Game *game);      // Function to draw the current game state.
-void delay(int milliseconds);   // Function to pause execution for a specified number of milliseconds (Windows-specific).
 
 #endif

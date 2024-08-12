@@ -4,9 +4,18 @@
 #include "game.h"
 
 // Start: Initializes the game, including lives, score, snake length, direction, and food position
-void initGame(Game *game, int lives)
+void initGame(Game *game)
 {
-    game->lives = lives;                                                            // Sets the number of lives to the maximum value
+    game->lives = MAX_LIVES;      // Sets the number of lives to the maximum value
+    generateFood(game);           // Generates the initial position of the food
+    game->startTime = time(NULL); // Sets the start time of the game
+}
+
+// Reset: return the snake to its original size, when a life is lost.
+void resetGame(Game *game)
+{
+    if (game->snake.body != NULL)
+        free(game->snake.body);
     game->snake.length = INITIAL_SNAKE_LENGTH;                                      // Sets the initial snake length
     game->snake.direction = 1;                                                      // Sets the initial direction of the snake
     game->snake.body = (Position *)malloc(INITIAL_SNAKE_LENGTH * sizeof(Position)); // Allocates memory for the snake body
@@ -15,8 +24,6 @@ void initGame(Game *game, int lives)
         game->snake.body[i].x = INITIAL_SNAKE_LENGTH - i - 1; // Initializes the x positions of the snake body parts
         game->snake.body[i].y = 0;                            // Sets the y position of the snake body parts to 0
     }
-    generateFood(game);           // Generates the initial position of the food
-    game->startTime = time(NULL); // Sets the start time of the game
 }
 
 // Update: Updates the game state when the snake eats food or time passes
@@ -71,6 +78,7 @@ int checkCollision(Game *game)
     // Checks for collision with walls
     if (snake->body[0].x < 0 || snake->body[0].x >= BOARD_WIDTH || snake->body[0].y < 0 || snake->body[0].y >= BOARD_HEIGHT)
     {
+        game->lives--;
         return 1;
     }
     // Checks for collision with its own body
@@ -78,6 +86,7 @@ int checkCollision(Game *game)
     {
         if (snake->body[0].x == snake->body[i].x && snake->body[0].y == snake->body[i].y)
         {
+            game->lives--;
             return 1;
         }
     }
@@ -112,8 +121,7 @@ void generateFood(Game *game)
 // Life: Ends the game when the snake dies and saves the score
 void endGame(Game *game)
 {
-    if (game->lives == 0)
-        saveScore(game);    // Saves the score
+    saveScore(game);        // Saves the score
     free(game->snake.body); // Frees the memory allocated for the snake body
 }
 

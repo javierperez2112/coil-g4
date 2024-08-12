@@ -13,15 +13,14 @@
 int main()
 {
     Game game; // Structure: Declares the game state
-    int lives = MAX_LIVES;
     game.score = 0;
     printf("Enter your username: ");
     scanf("%49s", game.username); // Reads the username input
+    initGame(&game);
     do
     {
-        initGame(&game, lives);
+        resetGame(&game);
         runGame(&game);
-        lives--;
     } while (game.lives > 0);
     return 0;
 }
