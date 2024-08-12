@@ -10,15 +10,15 @@
 #include "frontend.h"
 
 #ifdef _WINDOWS
-#define CLEAR "cls"
+#define CLEAR "cls" // Clear command in Windows
 #else
-#define CLEAR "clear"
+#define CLEAR "clear" // Clear command in Linux
 #endif
 
 void delay(int);
 
 #ifndef _WINDOWS // Linux-specific POSIX functions
-void set_input_mode(struct termios *saved_attributes)
+void setInputMode(struct termios *saved_attributes)
 {
     struct termios tattr;
 
@@ -35,7 +35,7 @@ void set_input_mode(struct termios *saved_attributes)
 }
 
 // Function to restore terminal attributes
-void reset_input_mode(struct termios *saved_attributes)
+void resetInputMode(struct termios *saved_attributes)
 {
     tcsetattr(STDIN_FILENO, TCSANOW, saved_attributes);
 }
@@ -47,7 +47,7 @@ void runGame(Game *game)
 {
 #ifndef _WINDOWS
     struct termios saved_attributes;
-    set_input_mode(&saved_attributes);
+    setInputMode(&saved_attributes);
 #endif
     char key;
     system(CLEAR);
@@ -91,7 +91,7 @@ void runGame(Game *game)
         case 'Q':
             endGame(game);
             game->lives = 0;
-            reset_input_mode(&saved_attributes);
+            resetInputMode(&saved_attributes);
             return; // Quit
         default:
             break;
@@ -99,17 +99,17 @@ void runGame(Game *game)
 
         moveSnake(&game->snake); // Movement: Moves the snake
         if (checkCollision(game))
-        {                  // Collision: Checks for collisions
+        { // Collision: Checks for collisions
             if (game->lives == 0)
-            {                                                  // Life: Checks if there are no lives left
+            { // Life: Checks if there are no lives left
                 printf("Game Over! Score: %d\n", game->score); // Displays the final score
                 endGame(game);                                 // Ends the game
-                reset_input_mode(&saved_attributes);
+                resetInputMode(&saved_attributes);
                 return; // Exits the game
             }
             else
             {
-                reset_input_mode(&saved_attributes);
+                resetInputMode(&saved_attributes);
                 return;
             }
         }
