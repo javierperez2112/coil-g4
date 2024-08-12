@@ -34,7 +34,7 @@ void reset_input_mode(struct termios *saved_attributes)
 #endif
 
 // Movement, Food, Growth, Life, Score: Draws the current game board including snake, food, lives, and score
-
+// TO DO: include Windows version (_WINDOWS)
 void runGame(Game *game)
 {
     struct termios saved_attributes;
