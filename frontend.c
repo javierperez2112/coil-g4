@@ -49,7 +49,6 @@ void runGame(Game *game)
     struct termios saved_attributes;
     setInputMode(&saved_attributes);
 #endif
-    char key;
     system(CLEAR);
     printf("Lives: %d\n", game->lives);
     printf("Press any key to start or q to quit...\n");
@@ -59,12 +58,19 @@ void runGame(Game *game)
     {
         printf("Game Over! Score: %d\n", game->score);
     }
-
+    char key;
     // Main game loop
     while (1)
     {
         // Keyboard: Checks if a key has been pressed
+        #ifdef _WINDOWS
+        if(_kbhit())
+        {
+        	key = _getch();
+        }
+        #else
         read(STDIN_FILENO, &key, 1);
+        #endif
         switch (key)
         {
         case 'w':
