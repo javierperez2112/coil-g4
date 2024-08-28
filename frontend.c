@@ -52,25 +52,25 @@ void runGame(Game *game)
     system(CLEAR);
     printf("Lives: %d\n", game->lives);
     printf("Press any key to start or q to quit...\n");
+    char key;
     while (!read(STDIN_FILENO, &key, 1))
         ;
     if (key == 'q' || key == 'Q')
     {
         printf("Game Over! Score: %d\n", game->score);
     }
-    char key;
     // Main game loop
     while (1)
     {
-        // Keyboard: Checks if a key has been pressed
-        #ifdef _WINDOWS
-        if(_kbhit())
+// Keyboard: Checks if a key has been pressed
+#ifdef _WINDOWS
+        if (_kbhit())
         {
-        	key = _getch();
+            key = _getch();
         }
-        #else
+#else
         read(STDIN_FILENO, &key, 1);
-        #endif
+#endif
         switch (key)
         {
         case 'w':
@@ -107,7 +107,7 @@ void runGame(Game *game)
         if (checkCollision(game))
         { // Collision: Checks for collisions
             if (game->lives == 0)
-            { // Life: Checks if there are no lives left
+            {                                                  // Life: Checks if there are no lives left
                 printf("Game Over! Score: %d\n", game->score); // Displays the final score
                 endGame(game);                                 // Ends the game
                 resetInputMode(&saved_attributes);
