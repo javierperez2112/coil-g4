@@ -1,18 +1,18 @@
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || defined(_WIN64)
-#define _WINDOWS
-#elif defined(__linux__)
+#define _WINDOWS         // If on Windows define _WINDOWS macro.
+#elif defined(__linux__) // If on GNU/Linux do nothing
 #else
 #error "Unknown operating system!"
 #endif
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 #ifdef _WINDOWS
 #include <windows.h>
 #include <conio.h>
 #else
 #include <termios.h>
+#include <stdlib.h>
+#include <unistd.h>
 #endif
 #include "frontend.h"
 
@@ -60,8 +60,19 @@ void runGame(Game *game)
     printf("Lives: %d\n", game->lives);
     printf("Press any key to start or q to quit...\n");
     char key;
+#ifndef _WINDOWS
     while (!read(STDIN_FILENO, &key, 1))
         ;
+#else
+    while (1)
+    {
+        if (_kbhit())
+        {
+            key = _getch();
+            break;
+        }
+    }
+#endif
     if (key == 'q' || key == 'Q')
     {
         printf("Game Over! Score: %d\n", game->score);
