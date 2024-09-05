@@ -1,3 +1,10 @@
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+#define _WINDOWS
+#elif defined(__linux__)
+#else
+#error "Unknown operating system!"
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
