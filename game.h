@@ -16,12 +16,20 @@ typedef struct
     int x, y;
 } Position;
 
+// Enum: assigns integer values to directions for better code readability
+enum Direction {
+    UP = 0,
+    RIGHT = 1,
+    DOWN = 2,
+    LEFT = 3
+};
+
 // Structure: Defines the snake with a body (consisting of positions), a length, and a direction
 typedef struct
 {
     Position *body;
     int length;
-    int direction;
+    enum Direction direction;
 } Snake;
 
 // Structure: Defines the food with a position

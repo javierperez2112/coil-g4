@@ -39,10 +39,10 @@ void updateGame(Game *game)
         generateFood(game);                                                                              // Generates new food
     }
 
-    time_t currentTime = time(NULL);                               // Gets the current time
-    int elapsedTime = (int)difftime(currentTime, game->startTime); // Calculates the elapsed time
-    game->score += elapsedTime * POINTS_PER_SECOND;                // Increases the score based on the elapsed time
-    game->startTime = currentTime;                                 // Updates the start time
+    time_t currentTime = time(NULL);                                     // Gets the current time
+    int elapsedTime = (int)difftime(currentTime, game->startTime);       // Calculates the elapsed time
+    game->score += elapsedTime * POINTS_PER_SECOND * game->snake.length; // Increases the score based on the elapsed time
+    game->startTime = currentTime;                                       // Updates the start time
 }
 
 // Movement: Moves the snake based on its direction

@@ -75,23 +75,23 @@ void runGame(Game *game)
         {
         case 'w':
         case 'W':
-            if (game->snake.direction != 2)
-                game->snake.direction = 0;
+            if (game->snake.direction != DOWN)
+                game->snake.direction = UP;
             break; // Up
         case 'd':
         case 'D':
-            if (game->snake.direction != 3)
-                game->snake.direction = 1;
+            if (game->snake.direction != LEFT)
+                game->snake.direction = RIGHT;
             break; // Right
         case 's':
         case 'S':
-            if (game->snake.direction != 0)
-                game->snake.direction = 2;
+            if (game->snake.direction != UP)
+                game->snake.direction = DOWN;
             break; // Down
         case 'a':
         case 'A':
-            if (game->snake.direction != 1)
-                game->snake.direction = 3;
+            if (game->snake.direction != RIGHT)
+                game->snake.direction = LEFT;
             break; // Left
         case 'q':
         case 'Q':
@@ -141,7 +141,29 @@ void drawGame(Game *game)
             {
                 if (game->snake.body[i].x == x && game->snake.body[i].y == y)
                 {
-                    printf(i == 0 ? "O" : "o"); // Snake head 'O', body 'o'
+                    // Print head depending on direction, or body segment.
+                    if (i == 0)
+                    {
+                        switch (game->snake.direction)
+                        {
+                        case UP:
+                            printf("ʌ");
+                            break;
+                        case RIGHT:
+                            printf(">");
+                            break;
+                        case DOWN:
+                            printf("v");
+                            break;
+                        case LEFT:
+                            printf("<");
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        printf("o");
+                    }
                     isBodyPart = 1;
                     break;
                 }
