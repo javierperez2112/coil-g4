@@ -8,6 +8,6 @@
 
 ## TO DO:
 
-* Make code cross-platform (include Linux and Windows)
+* Use compiler-defined macros to detect operating system (it's done incorrectly!)
 * Review and format the current code
 * Add extra functionalities for bonus points
