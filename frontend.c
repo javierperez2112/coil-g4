@@ -1,11 +1,5 @@
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || defined(_WIN64)
-#define _WINDOWS         // If on Windows define _WINDOWS macro.
-#elif defined(__linux__) // If on GNU/Linux do nothing
-#else
-#error "Unknown operating system!"
-#endif
-
 #include <stdio.h>
+#include "frontend.h"
 #ifdef _WINDOWS
 #include <windows.h>
 #include <conio.h>
@@ -14,7 +8,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #endif
-#include "frontend.h"
 
 #ifdef _WINDOWS
 #define CLEAR "cls" // Clear command in Windows
