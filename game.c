@@ -78,7 +78,6 @@ int checkCollision(Game *game)
     // Checks for collision with walls
     if (snake->body[0].x < 0 || snake->body[0].x >= BOARD_WIDTH || snake->body[0].y < 0 || snake->body[0].y >= BOARD_HEIGHT)
     {
-        game->lives--;
         return 1;
     }
     // Checks for collision with its own body
@@ -86,7 +85,6 @@ int checkCollision(Game *game)
     {
         if (snake->body[0].x == snake->body[i].x && snake->body[0].y == snake->body[i].y)
         {
-            game->lives--;
             return 1;
         }
     }
