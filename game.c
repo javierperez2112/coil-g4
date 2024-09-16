@@ -38,6 +38,46 @@ void updateGame(Game *game)
         game->snake.body = (Position *)realloc(game->snake.body, game->snake.length * sizeof(Position)); // Allocates additional memory for the new snake body part
         generateFood(game);                                                                              // Generates new food
     }
+    else
+    { // Food random movement
+        if (FOOD_MOVES && !(rand() % FOOD_MOVEMENT_PERIOD))
+        { // Around 1 in every FOOD_MOVEMENT_PERIOD ticks, the food moves one square randomly
+            Position oldPosition = game->food.position;
+            int move = rand() % 4; // Use random number in 0-3 as direction
+            switch (move)
+            {
+            case UP:
+                game->food.position.y--;
+                break;
+            case RIGHT:
+                game->food.position.x++;
+                break;
+            case DOWN:
+                game->food.position.y++;
+                break;
+            case LEFT:
+                game->food.position.x--;
+                break;
+            }
+            if (game->food.position.x < 0 || game->food.position.x >= BOARD_WIDTH ||
+                game->food.position.y < 0 || game->food.position.y >= BOARD_HEIGHT)
+            {
+                game->food.position = oldPosition; // If not valid, return to old position.
+            }
+            else
+            {
+                for (int i = 0; i < game->snake.length; i++)
+                {
+                    if (game->snake.body[i].x == game->food.position.x &&
+                        game->snake.body[i].y == game->food.position.y)
+                    {
+                        game->food.position = oldPosition; // If not valid, return to old position.
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
     time_t currentTime = time(NULL);                                     // Gets the current time
     int elapsedTime = (int)difftime(currentTime, game->startTime);       // Calculates the elapsed time
@@ -56,16 +96,16 @@ void moveSnake(Snake *snake)
     // Changes the position of the snake head based on the current direction
     switch (snake->direction)
     {
-    case 0:
+    case UP:
         snake->body[0].y--;
         break; // Moves up
-    case 1:
+    case RIGHT:
         snake->body[0].x++;
         break; // Moves right
-    case 2:
+    case DOWN:
         snake->body[0].y++;
         break; // Moves down
-    case 3:
+    case LEFT:
         snake->body[0].x--;
         break; // Moves left
     }

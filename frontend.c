@@ -111,6 +111,8 @@ void runGame(Game *game)
             printf("Lives: %d  Score: %d\n", game->lives, game->score);
             while (!read(STDIN_FILENO, &key, 1))
                 ;
+            if (key != 'q' && key != 'Q')
+                break;
         case 'q':
         case 'Q':
             endGame(game);

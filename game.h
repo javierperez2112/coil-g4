@@ -7,6 +7,8 @@
 #define MAX_LIVES 3
 #define POINTS_PER_SECOND 1
 #define POINTS_PER_FOOD 30
+#define FOOD_MOVEMENT_PERIOD 10 // If set lower, food will move more frequently. Do not set to zero!!!
+#define FOOD_MOVES 1         // Truth value for food movement (0 to not move, 1 to move)
 #define SCORE_FILE "snake_scores.txt"
 #include <time.h>
 
@@ -17,7 +19,8 @@ typedef struct
 } Position;
 
 // Enum: assigns integer values to directions for better code readability
-enum Direction {
+enum Direction
+{
     UP = 0,
     RIGHT = 1,
     DOWN = 2,
