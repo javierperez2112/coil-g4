@@ -36,6 +36,7 @@ void updateGame(Game *game)
         game->score += POINTS_PER_FOOD;                                                                  // Increases the score
         game->snake.length++;                                                                            // Increases the snake length
         game->snake.body = (Position *)realloc(game->snake.body, game->snake.length * sizeof(Position)); // Allocates additional memory for the new snake body part
+        game->snake.body[game->snake.length - 1] = (Position){-1, -1};                                   // Send new part to invisible position
         generateFood(game);                                                                              // Generates new food
     }
     else

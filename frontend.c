@@ -158,10 +158,14 @@ void drawGame(Game *game)
     system(CLEAR);
     printf("User: %s\n", game->username);
     // Draws the game board
-    for (int y = 0; y < BOARD_HEIGHT; y++)
+    for (int y = -1; y <= BOARD_HEIGHT; y++)
     {
-        for (int x = 0; x < BOARD_WIDTH; x++)
+        for (int x = -1; x < BOARD_WIDTH; x++)
         {
+            if(y == -1 || y == BOARD_HEIGHT || x == -1){
+                printf("X ");
+                continue;
+            }
             int isBodyPart = 0; // Flag to check if there is a snake body part at this position
 
             // Checks if there is a part of the snake at this position
@@ -206,12 +210,12 @@ void drawGame(Game *game)
                 }
                 else
                 {
-                    printf("."); // Empty space '.'
+                    printf(" "); // Empty space '.'
                 }
             }
             printf(" ");
         }
-        printf("\n"); // New line for the game board
+        printf("X\n"); // New line for the game board
     }
     // Displays the number of lives and the current score
     printf("Lives: %d  Score: %d\n", game->lives, game->score);
