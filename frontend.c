@@ -9,12 +9,6 @@
 #include <unistd.h>
 #endif
 
-#ifdef _WINDOWS
-#define CLEAR "cls" // Clear command in Windows
-#else
-#define CLEAR "clear" // Clear command in Linux
-#endif
-
 void delay(int);
 
 #ifndef _WINDOWS // Linux-specific POSIX functions
@@ -50,6 +44,11 @@ void runGame(Game *game)
     setInputMode(&saved_attributes);
 #endif
     system(CLEAR);
+    printf(SNAKE_ASCII_ART);
+    if (game->lives == MAX_LIVES)
+    {
+        printf("Welcome, %s!\n", game->username);
+    }
     printf("Lives: %d\n", game->lives);
     printf("Press any key to start or q to quit...\n");
     char key;
@@ -104,11 +103,21 @@ void runGame(Game *game)
             if (game->snake.direction != RIGHT)
                 game->snake.direction = LEFT;
             break; // Left
+        case 'p':
+        case 'P':
+            system(CLEAR);
+            printf(SNAKE_ASCII_ART);
+            printf("Game paused, press any key to continue or q to quit.\n");
+            printf("Lives: %d  Score: %d\n", game->lives, game->score);
+            while (!read(STDIN_FILENO, &key, 1))
+                ;
         case 'q':
         case 'Q':
             endGame(game);
             game->lives = 0;
+#ifndef _WINDOWS
             resetInputMode(&saved_attributes);
+#endif
             return; // Quit
         default:
             break;
@@ -122,12 +131,16 @@ void runGame(Game *game)
             {                                                  // Life: Checks if there are no lives left
                 printf("Game Over! Score: %d\n", game->score); // Displays the final score
                 endGame(game);                                 // Ends the game
+#ifndef _WINDOWS
                 resetInputMode(&saved_attributes);
+#endif
                 return; // Exits the game
             }
             else
             {
+#ifndef _WINDOWS
                 resetInputMode(&saved_attributes);
+#endif
                 return;
             }
         }
@@ -141,6 +154,7 @@ void runGame(Game *game)
 void drawGame(Game *game)
 {
     system(CLEAR);
+    printf("User: %s\n", game->username);
     // Draws the game board
     for (int y = 0; y < BOARD_HEIGHT; y++)
     {
@@ -153,7 +167,7 @@ void drawGame(Game *game)
             {
                 if (game->snake.body[i].x == x && game->snake.body[i].y == y)
                 {
-                    // Print head depending on direction, or body segment.
+                    // Print head depending on direction
                     if (i == 0)
                     {
                         switch (game->snake.direction)
@@ -174,7 +188,7 @@ void drawGame(Game *game)
                     }
                     else
                     {
-                        printf("o");
+                        printf("o"); // Print body segment
                     }
                     isBodyPart = 1;
                     break;
@@ -186,18 +200,20 @@ void drawGame(Game *game)
             {
                 if (game->food.position.x == x && game->food.position.y == y)
                 {
-                    printf("#"); // Food 'F'
+                    printf("#"); // Food '#'
                 }
                 else
                 {
                     printf("."); // Empty space '.'
                 }
             }
+            printf(" ");
         }
         printf("\n"); // New line for the game board
     }
     // Displays the number of lives and the current score
     printf("Lives: %d  Score: %d\n", game->lives, game->score);
+    printf("Press p to pause or q to quit.\n");
 }
 
 // Delay: Pauses for the specified number of milliseconds
@@ -207,6 +223,6 @@ void delay(int milliseconds)
 #ifdef _WINDOWS
     Sleep(milliseconds); // Windows-specific function to pause execution for a specified time
 #else
-    usleep(1000 * milliseconds);
+    usleep(1000 * milliseconds); // Linux-specific time function
 #endif
 }

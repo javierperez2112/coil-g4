@@ -14,6 +14,8 @@ int main()
 {
     Game game; // Structure: Declares the game state
     game.score = 0;
+    system(CLEAR);
+    printf(SNAKE_ASCII_ART);
     printf("Enter your username: ");
     scanf("%49s", game.username); // Reads the username input
     initGame(&game);

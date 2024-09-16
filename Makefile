@@ -1,21 +1,20 @@
-# Variables
+# Variables (compiler, options, libraries, object files, target)
 CC = gcc
 CFLAGS = -Wall
-LIBS = -lncurses
 OBJ = main.o game.o frontend.o
 TARGET = main
 
-# Build the target
+# Build main file
 $(TARGET): $(OBJ)
-	$(CC) $(OBJ) -o $(TARGET) $(CFLAGS) $(LIBS)
+	$(CC) $(OBJ) -o $(TARGET) $(CFLAGS)
 
-# Compile source files into object files
+# Compile source into object
 %.o: %.c %.h
 	$(CC) $< -c $(CFLAGS)
 
 main.o: main.c
 	$(CC) main.c -c $(CFLAGS)
 
-# Clean up object files and the target
+# Erase object files
 clean:
 	rm -rf *.o
