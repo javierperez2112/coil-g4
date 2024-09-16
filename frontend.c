@@ -190,7 +190,7 @@ void drawGame(Game *game)
                     }
                     else
                     {
-                        printf("o"); // Print body segment
+                        printf("%s", (i < game->snake.length / 2) ? "0" : "o"); // Make front half bigger
                     }
                     isBodyPart = 1;
                     break;
