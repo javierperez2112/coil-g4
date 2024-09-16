@@ -117,7 +117,7 @@ void runGame(Game *game)
         moveSnake(&game->snake); // Movement: Moves the snake
         if (checkCollision(game))
         { // Collision: Checks for collisions
-        game->lives--;
+            game->lives--;
             if (game->lives == 0)
             {                                                  // Life: Checks if there are no lives left
                 printf("Game Over! Score: %d\n", game->score); // Displays the final score
