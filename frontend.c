@@ -108,8 +108,19 @@ void runGame(Game *game)
             printf(SNAKE_ASCII_ART);
             printf("Game paused, press any key to continue or q to quit.\n");
             printf("Lives: %d  Score: %d\n", game->lives, game->score);
+#ifndef _WINDOWS
             while (!read(STDIN_FILENO, &key, 1))
                 ;
+#else
+            while (1)
+            {
+                if (_kbhit())
+                {
+                    key = _getch();
+                    break;
+                }
+            }
+#endif
             if (key != 'q' && key != 'Q')
                 break; // Pause
         case 'q':
