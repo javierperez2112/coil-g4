@@ -12,9 +12,6 @@ $(TARGET): $(OBJ)
 %.o: %.c %.h
 	$(CC) $< -c $(FLAGS)
 
-main.o: main.c
-	$(CC) main.c -c $(FLAGS)
-
 # Erase object files
 clean:
 	rm -rf *.o
