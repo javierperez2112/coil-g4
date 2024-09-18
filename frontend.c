@@ -9,7 +9,7 @@
 #include <unistd.h>
 #endif
 
-void delay(int);
+static void delay(int);
 
 #ifndef _WINDOWS // Linux-specific POSIX functions
 void setInputMode(struct termios *saved_attributes)
@@ -112,9 +112,9 @@ void runGame(Game *game)
             while (!read(STDIN_FILENO, &key, 1))
                 ;
             if (key != 'q' && key != 'Q')
-                break;
+                break; // Pause
         case 'q':
-        case 'Q':
+        case 'Q': // Quit
             endGame(game);
             game->lives = 0;
 #ifndef _WINDOWS
@@ -162,7 +162,8 @@ void drawGame(Game *game)
     {
         for (int x = -1; x < BOARD_WIDTH; x++)
         {
-            if(y == -1 || y == BOARD_HEIGHT || x == -1){
+            if (y == -1 || y == BOARD_HEIGHT || x == -1)
+            {
                 printf("X ");
                 continue;
             }
@@ -219,6 +220,7 @@ void drawGame(Game *game)
     }
     // Displays the number of lives and the current score
     printf("Lives: %d  Score: %d\n", game->lives, game->score);
+    printf("Use WASD keys to change directions.\n");
     printf("Press p to pause or q to quit.\n");
 }
 

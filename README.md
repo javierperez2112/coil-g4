@@ -6,8 +6,7 @@
 > ```make``` to compile the program \
 > ```./main``` to run the program
 
-## TO DO:
+## How to play
 
-* Use compiler-defined macros to detect operating system (it's done incorrectly!)
-* Review and format the current code
-* Add extra functionalities for bonus points
+> Enter username, then press any key to start the game \
+> Use WASD keys to change directions, p to pause and q to quit the game
