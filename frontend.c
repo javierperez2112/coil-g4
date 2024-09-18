@@ -35,8 +35,7 @@ void resetInputMode(struct termios *saved_attributes)
 }
 #endif
 
-// Movement, Food, Growth, Life, Score: Draws the current game board including snake, food, lives, and score
-// TO DO: include Windows version (_WINDOWS)
+// Runs the game loop, including I/O
 void runGame(Game *game)
 {
 #ifndef _WINDOWS
@@ -153,6 +152,7 @@ void runGame(Game *game)
     }
 }
 
+// Draws the current game board
 void drawGame(Game *game)
 {
     system(CLEAR);
@@ -225,7 +225,6 @@ void drawGame(Game *game)
 }
 
 // Delay: Pauses for the specified number of milliseconds
-
 void delay(int milliseconds)
 {
 #ifdef _WINDOWS
